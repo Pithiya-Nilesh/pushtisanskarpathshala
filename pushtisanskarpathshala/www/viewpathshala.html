@@ -1,0 +1,125 @@
+{% extends "templates/base.html" %}
+{% block title %}Pathshala Details{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="../files/css/styles.min.css" />
+<link rel="stylesheet" href="../files/css/responsive.css" />
+<style>
+table {
+  counter-reset: section;
+}
+
+.count:before {
+  counter-increment: section;
+  content: counter(section);
+}
+</style>
+{% endblock %}
+{% block content %}
+<main class="main">
+    <section class="inner-slide-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 py-4">
+                    <h1 class="promo-primary__title pb-4"><span>Pathshala Details</span></h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <h6>Details&nbsp;<img src="../files/heading-img.png" alt="" /></h6>
+        <div class="row mt-3">
+            {% for pathshala in pathshala_list %}
+            <div class="col-6 table-responsive">
+                <table class="table table-striped table-bordered table-sm mt-3" width="100%">
+                    <tbody class="text-center">
+                        <tr >
+                            <th scope="col">Reg. No</td>
+                            <td>{{ pathshala.pathshala_reg_no or ' ' }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Address</th>
+                            <td><span id="seven">{{pathshala.address_line_1 or ' ' }}</span> {{pathshala.address_line_2  or ' '}} {{pathshala.address_line_3 or ' ' }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">City</th>
+                            <td>{{pathshala.city or ' '}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Pincode</th>
+                            <td>{{pathshala.pincode or ' '}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Taluko</th>
+                            <td>{{pathshala.taluko or ' '}}</td>
+                        </tr>
+                        <tr>
+                            <th>District</th>
+                            <td>{{pathshala.district or ' '}}</td>
+                        </tr>
+                        <tr>
+                            <th>State</th>
+                            <td>{{pathshala.state or ' '}}</td>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <th scope="col">Mob. No</td>-->
+<!--                            <td>{{pathshala.mobile_no or ' '}}</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th scope="col">Sanchalak Name</td>-->
+<!--                            <td>{{pathshala.sanchalak_name or ' '}}</td>-->
+<!--                        </tr>-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6 table-responsive">
+                <table class="table table-striped table-bordered table-sm mt-3" width="100%">
+                    <tbody class="text-center">
+                        <tr>
+                            <th scope="col">Pathshala Reg Date</th>
+                            <td>{{pathshala.registration_date or ' '}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Phone No</th>
+                            <td>{{pathshala.phone_no or ' '}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Mob. No</th>
+                            <td>{{pathshala.mobile_no or ' '}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Sanchalak Name</th>
+                            <td>{{pathshala.sanchalak_name or ' '}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Total Students</th>
+                            <td>{{total_students}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+        {% if teacher_list %}
+        <div class="row" style="margin-top:50px;">
+            <div class="col-6 table-responsive">
+                <h5>Pathshala Teachers <img src="../files/heading-img.png" alt=""></h5>
+                <table class="table  table-bordered table-sm mt-3" width="100%">
+                    <tbody class="text-center">
+                        <tr>
+                            <th>No</th>
+                            <th>Teacher Name</th>
+                        </tr>
+                       {% for teacher in teacher_list %}
+                            <tr>
+                                <td class="count"></td>
+                                <td>{{teacher}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

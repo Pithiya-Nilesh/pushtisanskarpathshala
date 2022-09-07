@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include pushtisanskarpathshala *.css
+recursive-include pushtisanskarpathshala *.csv
+recursive-include pushtisanskarpathshala *.html
+recursive-include pushtisanskarpathshala *.ico
+recursive-include pushtisanskarpathshala *.js
+recursive-include pushtisanskarpathshala *.json
+recursive-include pushtisanskarpathshala *.md
+recursive-include pushtisanskarpathshala *.png
+recursive-include pushtisanskarpathshala *.py
+recursive-include pushtisanskarpathshala *.svg
+recursive-include pushtisanskarpathshala *.txt
+recursive-exclude pushtisanskarpathshala *.pyc

@@ -1,0 +1,176 @@
+{% extends "templates/base.html" %}
+{% block title %}Search Pathshala{% endblock %}
+{% block head_include %}
+<link rel="stylesheet" href="../files/css/styles.min.css" />
+<link rel="stylesheet" href="../files/css/responsive.css" />
+<style>
+    th{
+        background: #900035 linear-gradient(180deg, #a12653, #900035) repeat-x;
+        color:white;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<main class="main">
+    <section class="inner-slide-2">
+        <div class="container">
+            <div class="row my-5">
+                <div class="col-12">
+                    <h1 class="promo-primary__title"><span>Search Pathshala</span></h1>
+                    <p class="color--white pb-5 ml-5" style="text-indent :3rem;">You can send your children to
+                        Pushtisanskar
+                        Pathshala and help them get our rich heritage of
+                        Pushtimarg Sanskar which will not only help strengthen their roots to Pushtimarg but will
+                        help
+                        in all round development of their personality in all the fields of life. Pathshala runs on
+                        weekly basis, mostly on every Sunday for around 2 hours so children can easily manage it
+                        along
+                        with their school studies. Currently we have more then 180 Pathshala Centres in more then
+                        120
+                        cities and villages accross Gujarat with more then 6000 students attending it regularly.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <form method="post">
+            <div class="row">
+                <div class="col-md-6  col-sm-6">
+                    <div class="row">
+                        <h6 style="color:#910234;">◈ Search the Pathshala center near to your city below....</h6>
+                        <div class="col-md-12">
+                            <div class="form-group1">
+                                <!-- <div class="exampleInputName2">Select City :</div> -->
+                                <div class="input_container mt-3">
+                                    <select name="city_id" id="city_id" style="height:2rem;">
+                                        <option value="">-Select City-</option>
+                                        {% for city in cities %}
+                                        <option value="{{ city[0] }}">{{ city[0] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="button" class="btn btn-primary btn-sm rounded-0" onclick="search()">Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+<!--        {% set cityname = '<span class="mb-3" id="city_name"></span>' or ' '%}-->
+        <div class="row mt-5" id="pathshala_list">
+            <div class="row w-100">
+                {% if pathshala_list %}
+                <h6 class="pl-2">Pathshala city : {{ pathshala_list[0].city }}</h6>
+                <button class="btn bg-light ml-auto no-underline" type="button" onclick="tableToCSV()">
+                    Download
+                </button>
+            </div>
+            <div class="table-responsive">
+
+                <table class="table table-striped table-bordered table-sm mt-3" width="100%">
+                    <thead>
+                        <tr class="text-center">
+                            <th id="one" scope="col">Reg. No</th>
+                            <th id="two" scope="col">Address</th>
+                            <th id="three" scope="col">City</th>
+                            <th scope="col">District</th>
+                            <th id="four" scope="col">Mob. No</th>
+                            <th id="five" scope="col">Sanchalak Name</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pathshala in pathshala_list %}
+                        <tr style="font-size:0.9rem">
+                            <td id="six">{{ pathshala.pathshala_reg_no or ' ' }}</td>
+                            <td><span id="seven">{{pathshala.address_line_1 or ' ' }}</span> {{pathshala.address_line_2  or ' '}} {{pathshala.address_line_3 or ' ' }}</td>
+                            <td id="eight">{{pathshala.city or ' '}}</td>
+                            <td>{{pathshala.district or ' '}}</td>
+                            <td id="nine">{{pathshala.mobile_no or ' '}}</td>
+                            <td id="ten">{{pathshala.sanchalak_name or ' '}}</td>
+                            <td class="text-center"><a href="/viewpathshala?reg_no={{ pathshala.pathshala_reg_no or ' ' }}">View</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</main>
+
+<script>
+    function search() {
+        var city = document.getElementById("city_id").value;
+        frappe.call({
+            method: 'pushtisanskarpathshala.www.search_pathshala.list_pathshala',
+            args: {
+                'city': city
+            },
+        }).then(res => {
+            location.reload(true);
+        });
+    }
+    function tableToCSV() {
+
+        // Variable to store the final csv data
+        var csv_data = [];
+
+        // Get each row data
+        var rows = document.getElementsByTagName('tr');
+        for (var i = 0; i < rows.length; i++) {
+
+            // Get each column data
+            var cols = rows[i].querySelectorAll('#one,#two,#three,#four,#five,#six,#seven,#eight,#nine,#ten');
+
+            // Stores each csv row data
+            var csvrow = [];
+            for (var j = 0; j < cols.length; j++) {
+
+                // Get the text data of each cell
+                // of a row and push it to csvrow
+                csvrow.push(cols[j].innerHTML);
+            }
+
+            // Combine each column value with comma
+            csv_data.push(csvrow.join(","));
+        }
+
+        // Combine each row data with new line character
+        csv_data = csv_data.join('\n');
+
+        // Call this function to download csv file
+        downloadCSVFile(csv_data);
+
+        }
+
+        function downloadCSVFile(csv_data) {
+
+            // Create CSV file object and feed
+            // our csv_data into it
+            CSVFile = new Blob([csv_data], {
+                type: "text/xls"
+            });
+
+            // Create to temporary link to initiate
+            // download process
+            var temp_link = document.createElement('a');
+
+            // Download csv file
+            temp_link.download = "Pathshala_city.xls";
+            var url = window.URL.createObjectURL(CSVFile);
+            temp_link.href = url;
+
+            // This link should not be displayed
+            temp_link.style.display = "none";
+            document.body.appendChild(temp_link);
+
+            // Automatically click the link to
+            // trigger download
+            temp_link.click();
+            document.body.removeChild(temp_link);
+        }
+</script>
+{% endblock %}

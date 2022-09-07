@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "Student.########",
+ "creation": "2022-06-24 13:23:40.160818",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "email",
+  "select_exam_center",
+  "exam_type",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Email"
+  },
+  {
+   "fieldname": "select_exam_center",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Select Exam Center",
+   "options": "Ahmedabad\nAnkleshwar\nBhesan\nChikhli\nChoki\nDharangani\nDhoraji\nGondal\nHalvad\nJamkandorna\nJetpur\nJunagadh\nKarjan\nKeshod\nManavadar\nMangrol\nMendarda\nMorbi\nMoti Kunkavav\nOnline Exam\nRajkot\nSurat\nTalala-Gir\nUpleta\nVapi\nWankaner",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exam_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Exam Type",
+   "options": "Online Exam\nOffline Exam"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Exam Center",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-08-22 12:53:18.856040",
+ "modified_by": "Administrator",
+ "module": "Pushtisanskarpathshala",
+ "name": "Exam Center",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "route": "exam-center",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
